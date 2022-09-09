@@ -5,9 +5,9 @@ namespace Timesheets.Data
 {
     public interface IRepositoryBase<T>
     {
-        T GetItem(Guid Id);
+        T GetItem(Guid id);
         IEnumerable<T> GetItems();
-        void Add();
+        void Add(T item);
         void Update();
     }
 }

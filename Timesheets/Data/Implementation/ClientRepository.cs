@@ -5,14 +5,16 @@ using Timesheets.Models;
 
 namespace Timesheets.Data.Implementation
 {
+
     public class ClientRepository : IClientRepository
     {
-        public void Add()
+
+        public void Add(Client item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Client GetItem(Guid Id)
+        public Client GetItem(Guid id)
         {
             throw new NotImplementedException();
         }

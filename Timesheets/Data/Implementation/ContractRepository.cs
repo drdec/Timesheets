@@ -7,12 +7,12 @@ namespace Timesheets.Data.Implementation
 {
     public class ContractRepository : IContractRepository
     {
-        public void Add()
+        public void Add(Contract item)
         {
             throw new NotImplementedException();
         }
 
-        public Contract GetItem(Guid Id)
+        public Contract GetItem(Guid id)
         {
             throw new NotImplementedException();
         }

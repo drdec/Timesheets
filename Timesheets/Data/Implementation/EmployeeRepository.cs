@@ -7,12 +7,12 @@ namespace Timesheets.Data.Implementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        public void Add()
+        public void Add(Employee item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Employee GetItem(Guid Id)
+        public Employee GetItem(Guid id)
         {
             throw new NotImplementedException();
         }

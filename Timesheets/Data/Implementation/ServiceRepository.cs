@@ -7,12 +7,12 @@ namespace Timesheets.Data.Implementation
 {
     public class ServiceRepository : IServiceRepository
     {
-        public void Add()
+        public void Add(Service item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Service GetItem(Guid Id)
+        public Service GetItem(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -3,6 +3,7 @@ using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Interfaces;
 using Timesheets.Models;
+using Timesheets.Models.Dto;
 
 namespace Timesheets.Domain.Implementation
 {
@@ -18,6 +19,23 @@ namespace Timesheets.Domain.Implementation
         public Sheet GetItem(Guid id)
         {
             return _sheetRepository.GetItem(id);
+        }
+
+        public Guid Create(SheetDto sheetDto)
+        {
+            var sheet = new Sheet()
+            {
+                Id = Guid.NewGuid(),
+                Amount = sheetDto.Amount,
+                ContractId = sheetDto.ContractId,
+                Date = sheetDto.Date,
+                EmployeeId = sheetDto.EmployeeId,
+                ServiceId = sheetDto.ServiceId
+            };
+
+            _sheetRepository.Add(sheet);
+
+            return sheet.Id;
         }
     }
 }
