@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Timesheets.Models;
 using Timesheets.Models.Dto;
 
@@ -6,7 +7,7 @@ namespace Timesheets.Domain.Interfaces
 {
     public interface ISheetManager
     {
-        Sheet GetItem(Guid Id);
-        Guid Create(SheetDto sheet);
+        Task<Sheet> GetItem(Guid Id);
+        Task<Guid> Create(SheetDto sheet);
     }
 }

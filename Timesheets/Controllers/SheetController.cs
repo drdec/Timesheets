@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Interfaces;
@@ -27,9 +28,9 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] SheetDto sheet)
+        public async Task<IActionResult> Create([FromBody] SheetDto sheet)
         {
-            var res = _sheetManager.Create(sheet);
+            var res = await _sheetManager.Create(sheet);
             return Ok(res);
         }
     }

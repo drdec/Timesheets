@@ -13,6 +13,6 @@ namespace Timesheets.Models
         public string Title { get; set; }
         public DateTime DateEnd { get; set; }   
         public string Description { get; set; }
-        public List<Service> Service { get; set; }
+        public ICollection<Sheet> Sheets { get; set; }
     }
 }

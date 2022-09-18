@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Timesheets.Data.Interfaces;
 using Timesheets.Models;
 
@@ -7,22 +8,22 @@ namespace Timesheets.Data.Implementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        public void Add(Employee item)
+        public async Task Add(Employee item)
         {
             throw new NotImplementedException();
         }
 
-        public Employee GetItem(Guid id)
+        public async Task<Employee> GetItem(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Employee> GetItems()
+        public async Task<IEnumerable<Employee>> GetItems()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update()
+        public async Task Update()
         {
             throw new System.NotImplementedException();
         }

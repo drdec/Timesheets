@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Interfaces;
@@ -16,12 +17,12 @@ namespace Timesheets.Domain.Implementation
             _sheetRepository = sheetRepository;
         }
 
-        public Sheet GetItem(Guid id)
+        public async Task<Sheet> GetItem(Guid id)
         {
-            return _sheetRepository.GetItem(id);
+            return await _sheetRepository.GetItem(id);
         }
 
-        public Guid Create(SheetDto sheetDto)
+        public async Task<Guid> Create(SheetDto sheetDto)
         {
             var sheet = new Sheet()
             {
@@ -33,7 +34,7 @@ namespace Timesheets.Domain.Implementation
                 ServiceId = sheetDto.ServiceId
             };
 
-            _sheetRepository.Add(sheet);
+            await _sheetRepository.Add(sheet);
 
             return sheet.Id;
         }
