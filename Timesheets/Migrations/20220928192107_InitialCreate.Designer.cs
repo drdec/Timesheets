@@ -4,30 +4,31 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Timesheets.Data;
 
 namespace Timesheets.Migrations
 {
     [DbContext(typeof(TimesheetDbContext))]
-    [Migration("20220918215824_Temp")]
-    partial class Temp
+    [Migration("20220928192107_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.17");
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.17")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("Timesheets.Models.Client", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
-                    b.Property<byte[]>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -36,15 +37,15 @@ namespace Timesheets.Migrations
 
             modelBuilder.Entity("Timesheets.Models.Contract", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateEnd")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateStart")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -59,13 +60,12 @@ namespace Timesheets.Migrations
 
             modelBuilder.Entity("Timesheets.Models.Employee", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
-                    b.Property<byte[]>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -74,9 +74,9 @@ namespace Timesheets.Migrations
 
             modelBuilder.Entity("Timesheets.Models.Service", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -88,27 +88,24 @@ namespace Timesheets.Migrations
 
             modelBuilder.Entity("Timesheets.Models.Sheet", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Amount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    b.Property<byte[]>("ContractId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("ContractId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<byte[]>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid");
 
-                    b.Property<byte[]>("ServiceId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -123,9 +120,9 @@ namespace Timesheets.Migrations
 
             modelBuilder.Entity("Timesheets.Models.User", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .HasColumnType("text");

@@ -33,7 +33,9 @@ namespace Timesheets.Data.Implementation
 
         public async Task<IEnumerable<Sheet>> GetItems()
         {
-            throw new NotImplementedException();
+            var result = await _context.Sheets.ToListAsync();
+
+            return result;
         }
 
         public async Task Update()

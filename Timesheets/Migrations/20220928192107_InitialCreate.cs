@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Timesheets.Migrations
 {
-    public partial class Temp : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,8 @@ namespace Timesheets.Migrations
                 name: "Client",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    UserId = table.Column<byte[]>(type: "varbinary(16)", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -23,10 +23,10 @@ namespace Timesheets.Migrations
                 name: "Contract",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    DateStart = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateStart = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    DateEnd = table.Column<DateTime>(type: "datetime", nullable: false),
+                    DateEnd = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -38,8 +38,8 @@ namespace Timesheets.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    UserId = table.Column<byte[]>(type: "varbinary(16)", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,7 @@ namespace Timesheets.Migrations
                 name: "Service",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -62,7 +62,7 @@ namespace Timesheets.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -74,12 +74,12 @@ namespace Timesheets.Migrations
                 name: "Sheets",
                 columns: table => new
                 {
-                    Id = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
-                    EmployeeId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    ContractId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    ServiceId = table.Column<byte[]>(type: "varbinary(16)", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ServiceId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
@@ -37,6 +38,13 @@ namespace Timesheets.Domain.Implementation
             await _sheetRepository.Add(sheet);
 
             return sheet.Id;
+        }
+
+        public async Task<IEnumerable<Sheet>> GetItems()
+        {
+            var result = await _sheetRepository.GetItems();
+
+            return result;
         }
     }
 }

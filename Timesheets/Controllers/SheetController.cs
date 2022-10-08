@@ -20,14 +20,24 @@ namespace Timesheets.Controllers
             _sheetManager = sheetManager;
         }
 
-        [HttpGet]
-        public IActionResult GetResult(Guid id)
+        [HttpGet("get-item")]
+        public async Task<IActionResult> GetResult(Guid id)
         {
-            var res = _sheetManager.GetItem(id);
+            var res = await _sheetManager.GetItem(id);
             return Ok(res);
         }
 
-        [HttpPost]
+        [HttpGet("get-all-items")]
+        public async Task<IActionResult> GetAllItems()
+
+
+        {
+            var res = await _sheetManager.GetItems();
+
+            return Ok(res);
+        }
+
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] SheetDto sheet)
         {
             var res = await _sheetManager.Create(sheet);

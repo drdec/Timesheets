@@ -26,7 +26,7 @@ namespace Timesheets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TimesheetDbContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnections")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnections")));
 
 
             services.AddScoped<ISheetRepository, SheetRepository>();
