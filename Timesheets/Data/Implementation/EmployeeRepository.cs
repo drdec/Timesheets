@@ -23,7 +23,7 @@ namespace Timesheets.Data.Implementation
             throw new System.NotImplementedException();
         }
 
-        public async Task Update()
+        public async Task Update(Employee item)
         {
             throw new System.NotImplementedException();
         }

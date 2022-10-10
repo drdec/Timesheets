@@ -9,6 +9,6 @@ namespace Timesheets.Data
         Task<T> GetItem(Guid id);
         Task<IEnumerable<T>> GetItems();
         Task Add(T item);
-        Task Update();
+        Task Update(T item);
     }
 }

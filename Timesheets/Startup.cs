@@ -31,6 +31,9 @@ namespace Timesheets
 
             services.AddScoped<ISheetRepository, SheetRepository>();
             services.AddScoped<ISheetManager, SheetManager>();
+            services.AddScoped<IContractManager, ContractManager>();
+            services.AddScoped<IContractRepository, ContractRepository>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

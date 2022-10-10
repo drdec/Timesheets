@@ -46,5 +46,20 @@ namespace Timesheets.Domain.Implementation
 
             return result;
         }
+
+        public void Update(Guid id, SheetDto sheet)
+        {
+            var item = new Sheet()
+            {
+                Id = id,
+                Amount = sheet.Amount,
+                ContractId = sheet.ContractId,
+                Date = sheet.Date,
+                EmployeeId = sheet.EmployeeId,
+                ServiceId = sheet.ServiceId
+            };
+
+            _sheetRepository.Update(item);
+        }
     }
 }
