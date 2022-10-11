@@ -10,6 +10,7 @@ using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Implementation;
 using Timesheets.Domain.Interfaces;
+using Timesheets.Models;
 
 namespace Timesheets
 {
@@ -31,8 +32,13 @@ namespace Timesheets
 
             services.AddScoped<ISheetRepository, SheetRepository>();
             services.AddScoped<ISheetManager, SheetManager>();
+
             services.AddScoped<IContractManager, ContractManager>();
             services.AddScoped<IContractRepository, ContractRepository>();
+
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

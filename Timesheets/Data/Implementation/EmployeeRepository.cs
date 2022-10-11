@@ -8,9 +8,11 @@ namespace Timesheets.Data.Implementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
+
+
         public async Task Add(Employee item)
         {
-            throw new NotImplementedException();
+
         }
 
         public async Task<Employee> GetItem(Guid id)
