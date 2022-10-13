@@ -39,6 +39,9 @@ namespace Timesheets
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IEmployeeManager, EmployeeManager>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

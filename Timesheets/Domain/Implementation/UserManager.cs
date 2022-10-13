@@ -18,7 +18,7 @@ namespace Timesheets.Domain.Implementation
             _userRepository = userRepository;
         }
 
-        public async Task<Guid> Create(UserDto item)
+        public async Task<Guid> Create(UserRequest item)
         {
             var user = new User
             {
@@ -43,7 +43,7 @@ namespace Timesheets.Domain.Implementation
             return result;
         }
 
-        public async Task Update(Guid id, UserDto user)
+        public async Task Update(Guid id, UserRequest user)
         {
             var item = new User()
             {

@@ -23,7 +23,7 @@ namespace Timesheets.Domain.Implementation
             return await _sheetRepository.GetItem(id);
         }
 
-        public async Task<Guid> Create(SheetDto sheetDto)
+        public async Task<Guid> Create(SheetRequest sheetDto)
         {
             var sheet = new Sheet()
             {
@@ -47,7 +47,7 @@ namespace Timesheets.Domain.Implementation
             return result;
         }
 
-        public void Update(Guid id, SheetDto sheet)
+        public void Update(Guid id, SheetRequest sheet)
         {
             var item = new Sheet()
             {

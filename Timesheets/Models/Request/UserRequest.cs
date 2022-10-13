@@ -1,6 +1,6 @@
 ﻿namespace Timesheets.Models.Dto
 {
-    public class UserDto
+    public class UserRequest
     {
         public string UserName { get; set; }
     }

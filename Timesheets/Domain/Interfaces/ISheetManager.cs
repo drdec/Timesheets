@@ -9,8 +9,8 @@ namespace Timesheets.Domain.Interfaces
     public interface ISheetManager
     {
         Task<Sheet> GetItem(Guid Id);
-        Task<Guid> Create(SheetDto sheet);
+        Task<Guid> Create(SheetRequest sheet);
         Task<IEnumerable<Sheet>> GetItems();
-        void Update(Guid id, SheetDto sheet);
+        void Update(Guid id, SheetRequest sheet);
     }
 }

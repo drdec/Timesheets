@@ -10,8 +10,8 @@ namespace Timesheets.Domain.Interfaces
     {
         Task<User> GetItem(Guid id);
         Task<IEnumerable<User>> GetAllItems();
-        Task<Guid> Create(UserDto item);
-        Task Update(Guid id, UserDto user);
+        Task<Guid> Create(UserRequest item);
+        Task Update(Guid id, UserRequest user);
         Task Delete(Guid id);
     }
 }

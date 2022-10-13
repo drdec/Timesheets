@@ -11,7 +11,7 @@ using Timesheets.Models.Dto;
 namespace Timesheets.Controllers
 {
     [ApiController]
-    [Route("SheetsController")]
+    [Route("api/sheet")]
     public class SheetsController : ControllerBase
     {
         private readonly ISheetManager _sheetManager;
@@ -23,14 +23,14 @@ namespace Timesheets.Controllers
             _contractManager = contractManager;
         }
 
-        [HttpGet("get-item")]
+        [HttpGet("[controller]/get-item")]
         public async Task<IActionResult> GetResult([FromQuery] Guid id)
         {
             var res = await _sheetManager.GetItem(id);
             return Ok(res);
         }
 
-        [HttpGet("get-all-items")]
+        [HttpGet("[controller]/get-all-items")]
         public async Task<IActionResult> GetAllItems()
         {
             var res = await _sheetManager.GetItems();
@@ -43,8 +43,8 @@ namespace Timesheets.Controllers
         /// </summary>
         /// <param name="sheet"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] SheetDto sheet)
+        [HttpPost("[controller]/create")]
+        public async Task<IActionResult> Create([FromBody] SheetRequest sheet)
         {
             var isAllowedToCreate = await _contractManager.CheckContractIsActive(sheet.ContractId);
 
@@ -63,8 +63,8 @@ namespace Timesheets.Controllers
         /// <param name="id"></param>
         /// <param name="sheet"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] SheetDto sheet)
+        [HttpPut("[controller]/update/{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] SheetRequest sheet)
         {
             var isAllowedToCreate = await _contractManager.CheckContractIsActive(sheet.ContractId);
 
