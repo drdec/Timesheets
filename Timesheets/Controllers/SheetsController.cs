@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Timesheets.Data.Interfaces;
@@ -10,9 +11,7 @@ using Timesheets.Models.Dto;
 
 namespace Timesheets.Controllers
 {
-    [ApiController]
-    [Route("api/sheet")]
-    public class SheetsController : ControllerBase
+    public class SheetsController : TimesheetBaseController
     {
         private readonly ISheetManager _sheetManager;
         private readonly IContractManager _contractManager;
@@ -23,14 +22,20 @@ namespace Timesheets.Controllers
             _contractManager = contractManager;
         }
 
-        [HttpGet("[controller]/get-item")]
+        /// <summary>
+        /// Возвращает по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("get-item")]
         public async Task<IActionResult> GetResult([FromQuery] Guid id)
         {
             var res = await _sheetManager.GetItem(id);
             return Ok(res);
         }
 
-        [HttpGet("[controller]/get-all-items")]
+        [HttpGet("get-all-items")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAllItems()
         {
             var res = await _sheetManager.GetItems();
@@ -39,16 +44,15 @@ namespace Timesheets.Controllers
         }
 
         /// <summary>
-        /// Возвращает запись табеля 
+        /// Создает запись табеля 
         /// </summary>
         /// <param name="sheet"></param>
         /// <returns></returns>
-        [HttpPost("[controller]/create")]
+        [HttpPost("create")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([FromBody] SheetRequest sheet)
         {
-            var isAllowedToCreate = await _contractManager.CheckContractIsActive(sheet.ContractId);
-
-            if (isAllowedToCreate == null || (bool)!isAllowedToCreate)
+            if (await IsAllowedToCreate(sheet))
             {
                 return BadRequest($"Contract {sheet.ContractId} is not active or not found!");
             }
@@ -63,12 +67,11 @@ namespace Timesheets.Controllers
         /// <param name="id"></param>
         /// <param name="sheet"></param>
         /// <returns></returns>
-        [HttpPut("[controller]/update/{id}")]
+        [HttpPut("update/{id}")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] SheetRequest sheet)
         {
-            var isAllowedToCreate = await _contractManager.CheckContractIsActive(sheet.ContractId);
-
-            if (isAllowedToCreate == null || (bool)!isAllowedToCreate)
+            if (await IsAllowedToCreate(sheet))
             {
                 return BadRequest($"Contract {sheet.ContractId} is not active or not found!");
             }
@@ -76,6 +79,13 @@ namespace Timesheets.Controllers
             _sheetManager.Update(id, sheet);
 
             return Ok();
+        }
+
+        private async Task<bool> IsAllowedToCreate(SheetRequest sheet)
+        {
+            var isAllowedToCreate = await _contractManager.CheckContractIsActive(sheet.ContractId);
+
+            return isAllowedToCreate == null || (bool) !isAllowedToCreate;
         }
     }
 }

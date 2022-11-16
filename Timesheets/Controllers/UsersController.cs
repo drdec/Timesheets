@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.Domain.Interfaces;
 using Timesheets.Models.Dto;
 
 namespace Timesheets.Controllers
 {
-    [ApiController]
-    [Route("api/sheets")]
-    public class UsersController : ControllerBase
+    public class UsersController : TimesheetBaseController
     {
         private readonly IUserManager _userManager;
 
@@ -19,35 +18,36 @@ namespace Timesheets.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("[controller]/get-item/{id}")]
+        [HttpGet("get-item/{id}")]
         public async Task<IActionResult> GetItem([FromQuery]Guid id)
         {
             var res = await _userManager.GetItem(id);
             return Ok(res);
         }
 
-        [HttpGet("[controller]/get-all-items")]
+        [HttpGet("get-all-items")]
+        [Authorize(Roles = "user,admin")]
         public async Task<IActionResult> GetAllItems()
         {
             var res = await _userManager.GetAllItems();
             return Ok(res.ToList());
         }
 
-        [HttpPost("[controller]/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] UserRequest item)
         {
             var res = await _userManager.Create(item);
             return Ok(res);
         }
 
-        [HttpPut("[controller]/update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateItem([FromBody]Guid id, [FromRoute] UserRequest user)
         {
             await _userManager.Update(id, user);
             return Ok();
         }
 
-        [HttpDelete("[controller]/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteItem([FromQuery]Guid id)
         {
             await _userManager.Delete(id);

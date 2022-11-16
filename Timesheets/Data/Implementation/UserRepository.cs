@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -48,5 +49,9 @@ namespace Timesheets.Data.Implementation
             _timesheetDbContext.Users.Remove(user);
             await _timesheetDbContext.SaveChangesAsync();
         }
+
+        public async Task<User> GetByLoginAndPasswordHash(string requestLogin, byte[] passwordHash) => 
+            await _timesheetDbContext.Users.Where(x=>x.UserName == requestLogin && x.PasswordHash == passwordHash)
+                .FirstOrDefaultAsync();
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,8 @@ using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Implementation;
 using Timesheets.Domain.Interfaces;
+using Timesheets.Infrastructure;
+using Timesheets.Infrastructure.Extensions;
 using Timesheets.Models;
 
 namespace Timesheets
@@ -26,28 +30,16 @@ namespace Timesheets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TimesheetDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnections")));
+            services.ConfigureDbContext(Configuration);
 
+            services.ConfigureDomainManager();
+            services.ConfigureDomainRepository();
+            services.ConfigureAuthentication(Configuration);
+            services.ConfigureValidation();
 
-            services.AddScoped<ISheetRepository, SheetRepository>();
-            services.AddScoped<ISheetManager, SheetManager>();
+            services.AddControllers().AddFluentValidation();
 
-            services.AddScoped<IContractManager, ContractManager>();
-            services.AddScoped<IContractRepository, ContractRepository>();
-
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddScoped<IEmployeeManager, EmployeeManager>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Timesheets", Version = "v1" });
-            });
+            services.ConfigureBackendSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +56,7 @@ namespace Timesheets
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

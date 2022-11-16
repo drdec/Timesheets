@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Timesheets.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class UpdateData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace Timesheets.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +28,8 @@ namespace Timesheets.Migrations
                     DateStart = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
                     DateEnd = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true)
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +41,8 @@ namespace Timesheets.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,7 +66,9 @@ namespace Timesheets.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserName = table.Column<string>(type: "text", nullable: true)
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,7 +76,7 @@ namespace Timesheets.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sheets",
+                name: "Sheet",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -83,21 +88,21 @@ namespace Timesheets.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sheets", x => x.Id);
+                    table.PrimaryKey("PK_Sheet", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sheets_Contract_ContractId",
+                        name: "FK_Sheet_Contract_ContractId",
                         column: x => x.ContractId,
                         principalTable: "Contract",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Sheets_Employee_EmployeeId",
+                        name: "FK_Sheet_Employee_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Sheets_Service_ServiceId",
+                        name: "FK_Sheet_Service_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Service",
                         principalColumn: "Id",
@@ -105,18 +110,18 @@ namespace Timesheets.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sheets_ContractId",
-                table: "Sheets",
+                name: "IX_Sheet_ContractId",
+                table: "Sheet",
                 column: "ContractId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sheets_EmployeeId",
-                table: "Sheets",
+                name: "IX_Sheet_EmployeeId",
+                table: "Sheet",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sheets_ServiceId",
-                table: "Sheets",
+                name: "IX_Sheet_ServiceId",
+                table: "Sheet",
                 column: "ServiceId");
         }
 
@@ -126,7 +131,7 @@ namespace Timesheets.Migrations
                 name: "Client");
 
             migrationBuilder.DropTable(
-                name: "Sheets");
+                name: "Sheet");
 
             migrationBuilder.DropTable(
                 name: "User");

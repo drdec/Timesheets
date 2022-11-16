@@ -9,9 +9,7 @@ using Timesheets.Models.Dto;
 
 namespace Timesheets.Controllers
 {
-    [Route("api/sheets")]
-    [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : TimesheetBaseController
     {
         private readonly IEmployeeManager _employeeManager;
 
@@ -20,35 +18,35 @@ namespace Timesheets.Controllers
             _employeeManager = employeeManager;
         }
 
-        [HttpGet("[controller]/get-item/{id}")]
-        public async Task<IActionResult> GetItem(Guid id)
+        [HttpGet("get-item/")]
+        public async Task<IActionResult> GetItem([FromHeader]Guid id)
         {
             var res = await _employeeManager.GetItem(id);
             return Ok(res);
         }
 
-        [HttpPost("[controller]/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(EmployeeRequest employee)
         {
             var res = await _employeeManager.Create(employee);
             return Ok(res);
         }
 
-        [HttpPut("[controller]/update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update(Guid id, EmployeeRequest employee)
         {
             await _employeeManager.Update(id, employee);
             return Ok();
         }
 
-        [HttpGet("[controller]/get-all-items")]
+        [HttpGet("get-all-items")]
         public async Task<IActionResult> GetAllItems()
         {
             var res = await _employeeManager.GetAllItems();
             return Ok(res.ToList());
         }
 
-        [HttpDelete("[controller]/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _employeeManager.Delete(id);
