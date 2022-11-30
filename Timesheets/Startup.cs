@@ -1,20 +1,20 @@
+using System;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Timesheets.Data;
 using Timesheets.Data.Implementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Implementation;
 using Timesheets.Domain.Interfaces;
+using Timesheets.Infrastructure;
+using Timesheets.Infrastructure.Extensions;
+using Timesheets.Models;
 
 namespace Timesheets
 {
@@ -30,13 +30,16 @@ namespace Timesheets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ISheetRepository, SheetRepository>();
-            services.AddScoped<ISheetManager, SheetManager>();
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Timesheets", Version = "v1" });
-            });
+            services.ConfigureDbContext(Configuration);
+
+            services.ConfigureDomainManager();
+            services.ConfigureDomainRepository();
+            services.ConfigureAuthentication(Configuration);
+            services.ConfigureValidation();
+
+            services.AddControllers().AddFluentValidation();
+
+            services.ConfigureBackendSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +56,7 @@ namespace Timesheets
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
